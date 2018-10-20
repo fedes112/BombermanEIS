@@ -8,40 +8,60 @@ import static org.junit.Assert.assertTrue;
 public class TestBombermanSeMueve {
 
     @Test
-    public void cuandoBombermanSeMueveSiNoHayNadaCambiaDeCelda(){
-        Celda celda1 = new Celda();
-        Celda celda2 = new Celda();
+    public void tengo2CeldasContiguas(){
+        Celda celda1 = new Celda(1,2);
+        Celda celda2 = new Celda(1,1);
+
+        assert (celda1.contigua(celda2) && celda2.contigua(celda1));
+    }
+
+    @Test
+    public void cuandoBombermanSeMueveSiNoHayNadaCambiaACeldaContigua(){
+        Celda celda1 = new Celda(1,2);
+        Celda celda2 = new Celda(1,1);
+
         BomberMan bomber = new BomberMan(celda1);
 
+        bomber.moverCelda(celda2);
 
-        bomber.mover(celda2);
+        assert (bomber.estaEnCelda(celda2));
 
-        assertTrue(celda2.tieneAlgo());
+    }
+
+    @Test
+    public void cuandoBombermanSeMueveSiNoHayNadaYCeldaNoContiguaNoCambiaDeCelda(){
+        Celda celda1 = new Celda(1,2);
+        Celda celda2 = new Celda(1,0);
+
+        BomberMan bomber = new BomberMan(celda1);
+
+        bomber.moverCelda(celda2);
+
+        assert (bomber.estaEnCelda(celda1));
+
     }
 
     @Test
     public void cuandoBombermanSeMueveSiHayAlgoNoCambiaDeCelda(){
-        Celda celda1 = new Celda();
-        Obstaculo pared = new Pared();
-        Celda celda2 = new Celda(pared);
+        Celda celda1 = new Celda(1,2);
+        Celda celda2 = new Celda(1,1);
+        celda2.contener(new Pared());
         BomberMan bomber = new BomberMan(celda1);
 
+        bomber.moverCelda(celda2);
 
-        bomber.mover(celda2);
-
-        assertEquals(celda1,bomber.getCeldaEnLaQueEsta());
+        assert(bomber.estaEnCelda(celda1));
     }
 
     @Test
-    public void cuandoBombermanSeMueveSiHayAlguienLoPisa(){
-        Celda celda1 = new Celda();
-        Obstaculo malo = new Enemigo();
-        Celda celda2 = new Celda(malo);
+    public void cuandoBombermanSeMueveSiHayUnEnemigoSeMuere(){
+        Celda celda1 = new Celda(1,2);
+        Celda celda2 = new Celda(1,1);
+        celda2.contener(new Enemigo());
         BomberMan bomber = new BomberMan(celda1);
 
+        bomber.moverCelda(celda2);
 
-        bomber.mover(celda2);
-
-        assertTrue(!malo.existe());
+        assert(bomber.estaEnCelda(celda2));
     }
 }

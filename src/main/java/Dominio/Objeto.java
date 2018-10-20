@@ -1,7 +1,7 @@
 package Dominio;
 
-public class Pared extends Objeto{
+public class Objeto {
     public boolean PuedoMover() {
-        return false;
+        return true;
     }
 }
