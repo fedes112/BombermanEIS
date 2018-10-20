@@ -1,37 +1,55 @@
 package Dominio;
 
 public class Celda {
-    private boolean estaOcupada;
-    private Obstaculo obs;
+    private int cordenadasX;
+    private int cordenadasY;
+    private Objeto contengo;
 
-    public Celda(Obstaculo obstaculo) {
-        estaOcupada = true;
-        obs = obstaculo;
+    public Celda(int x,int y){
+        cordenadasX = x ;
+        cordenadasY = y ;
+        contengo = new Objeto();
     }
 
-    public Celda(){
-        estaOcupada = false;
-        obs = null;
+    public int getCordenadasY() {
+        return this.cordenadasY;
     }
 
-
-    public boolean tieneAlgo(){
-        return estaOcupada;
+    public int getCordenadasX() {
+        return this.cordenadasX;
     }
 
-    public void recibirPersonaje(BomberMan bomberMan) {
-        if (!estaOcupada){
-            bomberMan.cambiarCelda(this);
-            this.estaOcupada = true;
+    public boolean desfaceEnYEsMenorA2(int cordenadaX, int cordenadaY){
+        return((cordenadaX == this.getCordenadasX()) && 1 < Math.abs((cordenadaY - this.getCordenadasY())));
+    }
 
+    public boolean desfaceEnXEsMenorA2(int cordenadaX, int cordenadaY) {
+        return (1 < Math.abs(cordenadaX - this.getCordenadasX())) && (cordenadaY == this.getCordenadasY());
+    }
+
+    public boolean contigua(Celda celda) {
+        return !(this.desfaceEnXEsMenorA2(celda.getCordenadasX(), celda.getCordenadasY())
+                || this.desfaceEnYEsMenorA2(celda.getCordenadasX(), celda.getCordenadasY()));
+    }
+
+    public Celda mover(Celda celda) {
+        if (this.contigua(celda) && celda.estaVacia()){
+            return celda;
+        }else{
+            return this;
         }
-        else{
-            obs.mover();
-        }
-
     }
 
-    public void cambiarEstado() {
-        this.estaOcupada =!this.estaOcupada;
+    private boolean estaVacia() {
+        return (this.contengo.PuedoMover());
+    }
+
+    public boolean esEquals(Celda celda) {
+        return (this.cordenadasY == celda.getCordenadasY() && this.cordenadasX == celda.getCordenadasX()) ;
+    }
+
+    public void contener(Objeto objeto) {
+        this.contengo = objeto;
     }
 }
+
