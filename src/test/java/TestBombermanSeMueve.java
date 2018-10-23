@@ -9,16 +9,17 @@ public class TestBombermanSeMueve {
 
     @Test
     public void tengo2CeldasContiguas(){
-        Celda celda1 = new Celda(1,2);
-        Celda celda2 = new Celda(1,1);
-
+        Tablero tablero = new Tablero(10,10);
+        Celda celda1 = tablero.getCellda(1,2);
+        Celda celda2 = tablero.getCellda(1,1);
         assert (celda1.contigua(celda2) && celda2.contigua(celda1));
     }
 
     @Test
     public void cuandoBombermanSeMueveSiNoHayNadaCambiaACeldaContigua(){
-        Celda celda1 = new Celda(1,2);
-        Celda celda2 = new Celda(1,1);
+        Tablero tablero = new Tablero(10,10);
+        Celda celda1 = tablero.getCellda(1,2);
+        Celda celda2 = tablero.getCellda(1,1);
 
         BomberMan bomber = new BomberMan(celda1);
 
@@ -30,8 +31,9 @@ public class TestBombermanSeMueve {
 
     @Test
     public void cuandoBombermanSeMueveSiNoHayNadaYCeldaNoContiguaNoCambiaDeCelda(){
-        Celda celda1 = new Celda(1,2);
-        Celda celda2 = new Celda(1,0);
+        Tablero tablero = new Tablero(10,10);
+        Celda celda1 = tablero.getCellda(1,2);
+        Celda celda2 = tablero.getCellda(1,0);
 
         BomberMan bomber = new BomberMan(celda1);
 
@@ -43,8 +45,9 @@ public class TestBombermanSeMueve {
 
     @Test
     public void cuandoBombermanSeMueveSiHayAlgoNoCambiaDeCelda(){
-        Celda celda1 = new Celda(1,2);
-        Celda celda2 = new Celda(1,1);
+        Tablero tablero = new Tablero(10,10);
+        Celda celda1 = tablero.getCellda(1,2);
+        Celda celda2 = tablero.getCellda(1,1);
         celda2.contener(new Pared());
         BomberMan bomber = new BomberMan(celda1);
 
@@ -55,13 +58,28 @@ public class TestBombermanSeMueve {
 
     @Test
     public void cuandoBombermanSeMueveSiHayUnEnemigoSeMuere(){
-        Celda celda1 = new Celda(1,2);
-        Celda celda2 = new Celda(1,1);
+        Tablero tablero = new Tablero(10,10);
+        Celda celda1 = tablero.getCellda(1,2);
+        Celda celda2 = tablero.getCellda(1,1);
         celda2.contener(new Enemigo());
         BomberMan bomber = new BomberMan(celda1);
 
         bomber.moverCelda(celda2);
 
-        assert(bomber.estaEnCelda(celda2));
+        assert(bomber.estaEnCelda(celda1));
     }
+
+    @Test
+    public void cuandoBombermandejaUnaBombaYMataUnEnemigo(){
+        Tablero tablero = new Tablero(10,10);
+        Celda celda1 = tablero.getCellda(5,5);
+        Celda celda2 = tablero.getCellda(4,5);
+        celda2.contener(new Enemigo());
+        BomberMan bomber = new BomberMan(celda1);
+        Bomba bomba = bomber.dejarBomba(1);
+        bomba.explotar();
+        assert(celda2.estaVacia());
+    }
+
+
 }
