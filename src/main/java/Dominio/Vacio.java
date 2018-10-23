@@ -1,12 +1,10 @@
 package Dominio;
 
-public class Enemigo implements ContenidoDeLaCelda {
+public class Vacio implements ContenidoDeLaCelda{
     public boolean PuedoMover(BomberMan bomber) {
-        bomber.matar();
-        return false;
+        return true;
     }
 
-    @Override
     public void recivoExplocion(Celda celda) {
         celda.contener(new Vacio());
     }
