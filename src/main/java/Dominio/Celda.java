@@ -1,14 +1,17 @@
 package Dominio;
 
 public class Celda {
+    private Tablero miTablero;
     private int cordenadasX;
     private int cordenadasY;
-    private Objeto contengo;
+    private ContenidoDeLaCelda contengo;
 
-    public Celda(int x,int y){
-        cordenadasX = x ;
-        cordenadasY = y ;
-        contengo = new Objeto();
+
+    public Celda(int x,int y,Tablero tablero){
+        cordenadasX = x;
+        cordenadasY = y;
+        contengo = new Vacio();
+        miTablero = tablero;
     }
 
     public int getCordenadasY() {
@@ -32,24 +35,45 @@ public class Celda {
                 || this.desfaceEnYEsMenorA2(celda.getCordenadasX(), celda.getCordenadasY()));
     }
 
-    public Celda mover(Celda celda) {
-        if (this.contigua(celda) && celda.estaVacia()){
+    public Celda mover(Celda celda,BomberMan bomber) {
+        if (this.contigua(celda) && celda.estaVacia(bomber)){
             return celda;
         }else{
             return this;
         }
     }
 
-    private boolean estaVacia() {
-        return (this.contengo.PuedoMover());
+    private boolean estaVacia(BomberMan bomber) {
+        return (this.contengo.PuedoMover(bomber));
     }
 
     public boolean esEquals(Celda celda) {
         return (this.cordenadasY == celda.getCordenadasY() && this.cordenadasX == celda.getCordenadasX()) ;
     }
 
-    public void contener(Objeto objeto) {
+    public void contener(ContenidoDeLaCelda objeto) {
         this.contengo = objeto;
+    }
+
+    public Celda celdaEste(){
+        return miTablero.getCellda(cordenadasX,cordenadasY+1);
+    }
+    public Celda celdaNorte(){
+        return miTablero.getCellda(cordenadasX+1,cordenadasY);
+    }
+    public Celda celdaSur(){
+        return miTablero.getCellda(cordenadasX-1,cordenadasY);
+    }
+    public Celda celdaOeste(){
+        return miTablero.getCellda(cordenadasX,cordenadasY-1);
+    }
+
+    public void romperObstaculo() {
+        contengo.recivoExplocion(this);
+    }
+
+    public boolean estaVacia() {
+        return contengo.getClass() == Vacio.class;
     }
 }
 
