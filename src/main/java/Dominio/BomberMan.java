@@ -4,6 +4,8 @@ package Dominio;
 public class BomberMan {
     private Celda celdaEnLaQueEsta;
     private EstadoVivo vivo = new EstadoVivo();
+    private boolean saltarParedes = false;
+    private Bombas dejarBombas= new DejarBombas();
 
     public BomberMan(Celda celda) {
        celdaEnLaQueEsta = celda;
@@ -23,7 +25,14 @@ public class BomberMan {
     }
 
     public Bomba dejarBomba(int tiempo){
-        return new Bomba(tiempo,celdaEnLaQueEsta);
+        return dejarBombas.dejarBomba(tiempo,celdaEnLaQueEsta);
     }
 
+    public boolean puedeSaltarParedes() {
+        return this.saltarParedes;
+    }
+
+    public void setSaltarParedes(boolean cambio){ this.saltarParedes = cambio; }
+
+    public void setDejarBombas(TirarBombas tirarBombas) { dejarBombas = tirarBombas;}
 }

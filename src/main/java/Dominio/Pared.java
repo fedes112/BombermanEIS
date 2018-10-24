@@ -2,7 +2,7 @@ package Dominio;
 
 public class Pared implements ContenidoDeLaCelda {
     public boolean PuedoMover(BomberMan bomber) {
-        return false;
+        return bomber.puedeSaltarParedes();
     }
 
     @Override

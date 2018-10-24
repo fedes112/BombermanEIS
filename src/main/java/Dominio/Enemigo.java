@@ -11,3 +11,26 @@ public class Enemigo implements ContenidoDeLaCelda {
         celda.contener(new Vacio());
     }
 }
+
+class Bagulaa extends Enemigo {
+
+    @Override
+    public void recivoExplocion(Celda celda) {
+        celda.contener(new Lanzar_bombas());
+    }
+}
+
+class ProtoMaxJr extends Enemigo {
+
+    @Override
+    public void recivoExplocion(Celda celda) {
+        celda.contener(new SaltarPared());
+    }
+}
+
+class ProtoMaxUnits extends Enemigo {
+    @Override
+    public void recivoExplocion(Celda celda) {
+        celda.contener(new MultiBombasSalto());
+    }
+}

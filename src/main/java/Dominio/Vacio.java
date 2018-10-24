@@ -5,7 +5,5 @@ public class Vacio implements ContenidoDeLaCelda{
         return true;
     }
 
-    public void recivoExplocion(Celda celda) {
-        celda.contener(new Vacio());
-    }
+    public void recivoExplocion(Celda celda) {}
 }
